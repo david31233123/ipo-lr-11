@@ -1,0 +1,277 @@
+{
+  "last_updated": "2025-12-03T12:04:25.882604",
+  "source": "https://news.ycombinator.com/",
+  "news_count": 30,
+  "news": [
+    {
+      "id": 1,
+      "title": "Accepting US car standards would risk European lives",
+      "url": "https://etsc.eu/accepting-us-car-standards-would-risk-european-lives-warn-cities-and-civil-society/",
+      "comments": 132,
+      "score": 246,
+      "author": "saubeidl",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 2,
+      "title": "Anthropic acquires Bun",
+      "url": "https://bun.com/blog/bun-joins-anthropic",
+      "comments": 846,
+      "score": 1776,
+      "author": "ryanvogel",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 3,
+      "title": "Zig quits GitHub, says Microsoft's AI obsession has ruined the service",
+      "url": "https://www.theregister.com/2025/12/02/zig_quits_github_microsoft_ai_obsession/",
+      "comments": 34,
+      "score": 95,
+      "author": "Brajeshwar",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 4,
+      "title": "IBM CEO says there is 'no way' spending on AI data centers will pay off",
+      "url": "https://www.businessinsider.com/ibm-ceo-big-tech-ai-capex-data-center-spending-2025-12",
+      "comments": 586,
+      "score": 495,
+      "author": "nabla9",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 5,
+      "title": "AI agents break rules under everyday pressure",
+      "url": "https://spectrum.ieee.org/ai-agents-safety",
+      "comments": 36,
+      "score": 116,
+      "author": "pseudolus",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 6,
+      "title": "Interview with RollerCoaster Tycoon's Creator, Chris Sawyer (2024)",
+      "url": "https://medium.com/atari-club/interview-with-rollercoaster-tycoons-creator-chris-sawyer-684a0efb0f13",
+      "comments": 14,
+      "score": 62,
+      "author": "areoform",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 7,
+      "title": "Quad9 DOH HTTP/1.1 Retirement, December 15, 2025",
+      "url": "https://quad9.net/news/blog/doh-http-1-1-retirement/",
+      "comments": 11,
+      "score": 48,
+      "author": "pickledoyster",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 8,
+      "title": "Super fast aggregations in PostgreSQL 19",
+      "url": "https://www.cybertec-postgresql.com/en/super-fast-aggregations-in-postgresql-19/",
+      "comments": 4,
+      "score": 62,
+      "author": "jnord",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 9,
+      "title": "Paged Out",
+      "url": "https://pagedout.institute",
+      "comments": 47,
+      "score": 389,
+      "author": "varjag",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 10,
+      "title": "The Writing Is on the Wall for Handwriting Recognition",
+      "url": "https://newsletter.dancohen.org/archive/the-writing-is-on-the-wall-for-handwriting-recognition/",
+      "comments": 0,
+      "score": 10,
+      "author": "speckx",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 11,
+      "title": "OpenAI declares 'code red' as Google catches up in AI race",
+      "url": "https://www.theverge.com/news/836212/openai-code-red-chatgpt",
+      "comments": 698,
+      "score": 637,
+      "author": "goplayoutside",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 12,
+      "title": "I designed and printed a custom nose guard to help my dog with DLE",
+      "url": "https://snoutcover.com/billie-story",
+      "comments": 61,
+      "score": 506,
+      "author": "ragswag",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 13,
+      "title": "Understanding ECDSA",
+      "url": "https://avidthinker.github.io/2025/11/28/understanding-ecdsa/",
+      "comments": 5,
+      "score": 52,
+      "author": "avidthinker",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 14,
+      "title": "Sending DMARC reports is somewhat hazardous",
+      "url": "https://utcc.utoronto.ca/~cks/space/blog/spam/DMARCSendingReportsProblems",
+      "comments": 6,
+      "score": 37,
+      "author": "zdw",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 15,
+      "title": "What, if anything, is universal to music cognition? (2024)",
+      "url": "https://www.nature.com/articles/s41562-023-01800-9",
+      "comments": 2,
+      "score": 11,
+      "author": "Hooke",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 16,
+      "title": "Learning music with Strudel",
+      "url": "https://terryds.notion.site/Learning-Music-with-Strudel-2ac98431b24180deb890cc7de667ea92",
+      "comments": 116,
+      "score": 474,
+      "author": "terryds",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 17,
+      "title": "Counter Galois Onion: Improved encryption for Tor circuit traffic",
+      "url": "https://blog.torproject.org/introducing-cgo/",
+      "comments": 10,
+      "score": 69,
+      "author": "wrayjustin",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 18,
+      "title": "Japanese game devs face font dilemma as license increases from $380 to $20k",
+      "url": "https://www.gamesindustry.biz/japanese-devs-face-font-licensing-dilemma-as-leading-provider-increases-annual-plan-price-from-380-to-20000",
+      "comments": 97,
+      "score": 211,
+      "author": "zdw",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 19,
+      "title": "Amazon launches Trainium3",
+      "url": "https://techcrunch.com/2025/12/02/amazon-releases-an-impressive-new-ai-chip-and-teases-a-nvidia-friendly-roadmap/",
+      "comments": 65,
+      "score": 168,
+      "author": "thnaks",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 20,
+      "title": "Researchers Find Microbe Capable of Producing Oxygen from Martian Soil",
+      "url": "https://scienceclock.com/microbe-that-could-turn-martian-dust-into-oxygen/",
+      "comments": 2,
+      "score": 9,
+      "author": "ashishgupta2209",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 21,
+      "title": "Qwen3-VL can scan two-hour videos and pinpoint nearly every detail",
+      "url": "https://the-decoder.com/qwen3-vl-can-scan-two-hour-videos-and-pinpoint-nearly-every-detail/",
+      "comments": 58,
+      "score": 181,
+      "author": "thm",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 22,
+      "title": "Zig's new plan for asynchronous programs",
+      "url": "https://lwn.net/SubscriberLink/1046084/4c048ee008e1c70e/",
+      "comments": 206,
+      "score": 281,
+      "author": "messe",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 23,
+      "title": "Load ZX Spectrum – first Museum dedicated to our first personal computer",
+      "url": "https://loadzx.com/en/",
+      "comments": 10,
+      "score": 45,
+      "author": "elvis70",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 24,
+      "title": "All about automotive lidar",
+      "url": "https://mainstreetautonomy.com/blog/2025-08-29-all-about-automotive-lidar/",
+      "comments": 63,
+      "score": 150,
+      "author": "dllu",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 25,
+      "title": "All Sources of DirectX 12 Documentation",
+      "url": "https://asawicki.info/news_1794_all_sources_of_directx_12_documentation",
+      "comments": 8,
+      "score": 19,
+      "author": "ibobev",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 26,
+      "title": "Kohler Can Access Pictures from \"End-to-End Encrypted\" Toilet Camera",
+      "url": "https://varlogsimon.leaflet.pub/3m6zrw6k2bs2p?interactionDrawer=quotes",
+      "comments": 143,
+      "score": 168,
+      "author": "TimDotC",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 27,
+      "title": "School cell phone bans and student achievement",
+      "url": "https://www.nber.org/digest/202512/school-cell-phone-bans-and-student-achievement",
+      "comments": 146,
+      "score": 148,
+      "author": "harias",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 28,
+      "title": "Free static site generator for small restaurants and cafes",
+      "url": "https://lite.localcafe.org/",
+      "comments": 77,
+      "score": 137,
+      "author": "fullstacking",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 29,
+      "title": "Delty (YC X25) Is Hiring",
+      "url": "https://www.ycombinator.com/companies/delty/jobs/aPWMaiq-full-stack-software-engineer",
+      "comments": 0,
+      "score": 0,
+      "author": "Unknown",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    },
+    {
+      "id": 30,
+      "title": "Codeberg Is Down",
+      "url": "https://status.codeberg.org/status/codeberg",
+      "comments": 3,
+      "score": 10,
+      "author": "x3ro",
+      "hn_url": "https://news.ycombinator.com/item?id="
+    }
+  ]
+}

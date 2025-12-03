@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker News Parser</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .news-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .news-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .news-table tr:hover td {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+        
+        .news-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .news-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1em;
+            line-height: 1.4;
+        }
+        
+        .news-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .news-title a:hover {
+            color: #667eea;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .comments-badge {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .score-badge {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .author {
+            color: #666;
+            font-style: italic;
+        }
+        
+        .source-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .source-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        
+        .last-updated {
+            text-align: right;
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .news-table {
+                font-size: 0.9em;
+            }
+            
+            .news-table th,
+            .news-table td {
+                padding: 12px 10px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📰 Hacker News Parser</h1>
+            <div class="subtitle">Latest stories from the tech community</div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">30</div>
+                <div>Total Stories</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">3486</div>
+                <div>Total Comments</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1776</div>
+                <div>Highest Score</div>
+            </div>
+        </div>
+        
+        <div class="last-updated">
+            Last updated: 2025-12-03 12:04:25
+        </div>
+        
+        <table class="news-table">
+            <thead>
+                <tr>
+                    <th width="5%">#</th>
+                    <th width="55%">Title</th>
+                    <th width="15%">Author</th>
+                    <th width="10%">Score</th>
+                    <th width="15%">Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td><strong>1</strong></td>
+                    <td class="news-title">
+                        <a href="https://etsc.eu/accepting-us-car-standards-would-risk-european-lives-warn-cities-and-civil-society/" target="_blank" rel="noopener noreferrer">
+                            Accepting US car standards would risk European lives
+                        </a>
+                    </td>
+                    <td class="author">saubeidl</td>
+                    <td>
+                        <span class="badge score-badge">▲ 246</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 132</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>2</strong></td>
+                    <td class="news-title">
+                        <a href="https://bun.com/blog/bun-joins-anthropic" target="_blank" rel="noopener noreferrer">
+                            Anthropic acquires Bun
+                        </a>
+                    </td>
+                    <td class="author">ryanvogel</td>
+                    <td>
+                        <span class="badge score-badge">▲ 1776</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 846</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>3</strong></td>
+                    <td class="news-title">
+                        <a href="https://www.theregister.com/2025/12/02/zig_quits_github_microsoft_ai_obsession/" target="_blank" rel="noopener noreferrer">
+                            Zig quits GitHub, says Microsoft's AI obsession has ruined the service
+                        </a>
+                    </td>
+                    <td class="author">Brajeshwar</td>
+                    <td>
+                        <span class="badge score-badge">▲ 95</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 34</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>4</strong></td>
+                    <td class="news-title">
+                        <a href="https://www.businessinsider.com/ibm-ceo-big-tech-ai-capex-data-center-spending-2025-12" target="_blank" rel="noopener noreferrer">
+                            IBM CEO says there is 'no way' spending on AI data centers will pay off
+                        </a>
+                    </td>
+                    <td class="author">nabla9</td>
+                    <td>
+                        <span class="badge score-badge">▲ 495</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 586</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>5</strong></td>
+                    <td class="news-title">
+                        <a href="https://spectrum.ieee.org/ai-agents-safety" target="_blank" rel="noopener noreferrer">
+                            AI agents break rules under everyday pressure
+                        </a>
+                    </td>
+                    <td class="author">pseudolus</td>
+                    <td>
+                        <span class="badge score-badge">▲ 116</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 36</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>6</strong></td>
+                    <td class="news-title">
+                        <a href="https://medium.com/atari-club/interview-with-rollercoaster-tycoons-creator-chris-sawyer-684a0efb0f13" target="_blank" rel="noopener noreferrer">
+                            Interview with RollerCoaster Tycoon's Creator, Chris Sawyer (2024)
+                        </a>
+                    </td>
+                    <td class="author">areoform</td>
+                    <td>
+                        <span class="badge score-badge">▲ 62</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 14</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>7</strong></td>
+                    <td class="news-title">
+                        <a href="https://quad9.net/news/blog/doh-http-1-1-retirement/" target="_blank" rel="noopener noreferrer">
+                            Quad9 DOH HTTP/1.1 Retirement, December 15, 2025
+                        </a>
+                    </td>
+                    <td class="author">pickledoyster</td>
+                    <td>
+                        <span class="badge score-badge">▲ 48</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 11</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>8</strong></td>
+                    <td class="news-title">
+                        <a href="https://www.cybertec-postgresql.com/en/super-fast-aggregations-in-postgresql-19/" target="_blank" rel="noopener noreferrer">
+                            Super fast aggregations in PostgreSQL 19
+                        </a>
+                    </td>
+                    <td class="author">jnord</td>
+                    <td>
+                        <span class="badge score-badge">▲ 62</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 4</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>9</strong></td>
+                    <td class="news-title">
+                        <a href="https://pagedout.institute" target="_blank" rel="noopener noreferrer">
+                            Paged Out
+                        </a>
+                    </td>
+                    <td class="author">varjag</td>
+                    <td>
+                        <span class="badge score-badge">▲ 389</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 47</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>10</strong></td>
+                    <td class="news-title">
+                        <a href="https://newsletter.dancohen.org/archive/the-writing-is-on-the-wall-for-handwriting-recognition/" target="_blank" rel="noopener noreferrer">
+                            The Writing Is on the Wall for Handwriting Recognition
+                        </a>
+                    </td>
+                    <td class="author">speckx</td>
+                    <td>
+                        <span class="badge score-badge">▲ 10</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 0</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>11</strong></td>
+                    <td class="news-title">
+                        <a href="https://www.theverge.com/news/836212/openai-code-red-chatgpt" target="_blank" rel="noopener noreferrer">
+                            OpenAI declares 'code red' as Google catches up in AI race
+                        </a>
+                    </td>
+                    <td class="author">goplayoutside</td>
+                    <td>
+                        <span class="badge score-badge">▲ 637</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 698</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>12</strong></td>
+                    <td class="news-title">
+                        <a href="https://snoutcover.com/billie-story" target="_blank" rel="noopener noreferrer">
+                            I designed and printed a custom nose guard to help my dog with DLE
+                        </a>
+                    </td>
+                    <td class="author">ragswag</td>
+                    <td>
+                        <span class="badge score-badge">▲ 506</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 61</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>13</strong></td>
+                    <td class="news-title">
+                        <a href="https://avidthinker.github.io/2025/11/28/understanding-ecdsa/" target="_blank" rel="noopener noreferrer">
+                            Understanding ECDSA
+                        </a>
+                    </td>
+                    <td class="author">avidthinker</td>
+                    <td>
+                        <span class="badge score-badge">▲ 52</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 5</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>14</strong></td>
+                    <td class="news-title">
+                        <a href="https://utcc.utoronto.ca/~cks/space/blog/spam/DMARCSendingReportsProblems" target="_blank" rel="noopener noreferrer">
+                            Sending DMARC reports is somewhat hazardous
+                        </a>
+                    </td>
+                    <td class="author">zdw</td>
+                    <td>
+                        <span class="badge score-badge">▲ 37</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 6</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>15</strong></td>
+                    <td class="news-title">
+                        <a href="https://www.nature.com/articles/s41562-023-01800-9" target="_blank" rel="noopener noreferrer">
+                            What, if anything, is universal to music cognition? (2024)
+                        </a>
+                    </td>
+                    <td class="author">Hooke</td>
+                    <td>
+                        <span class="badge score-badge">▲ 11</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 2</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>16</strong></td>
+                    <td class="news-title">
+                        <a href="https://terryds.notion.site/Learning-Music-with-Strudel-2ac98431b24180deb890cc7de667ea92" target="_blank" rel="noopener noreferrer">
+                            Learning music with Strudel
+                        </a>
+                    </td>
+                    <td class="author">terryds</td>
+                    <td>
+                        <span class="badge score-badge">▲ 474</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 116</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>17</strong></td>
+                    <td class="news-title">
+                        <a href="https://blog.torproject.org/introducing-cgo/" target="_blank" rel="noopener noreferrer">
+                            Counter Galois Onion: Improved encryption for Tor circuit traffic
+                        </a>
+                    </td>
+                    <td class="author">wrayjustin</td>
+                    <td>
+                        <span class="badge score-badge">▲ 69</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 10</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>18</strong></td>
+                    <td class="news-title">
+                        <a href="https://www.gamesindustry.biz/japanese-devs-face-font-licensing-dilemma-as-leading-provider-increases-annual-plan-price-from-380-to-20000" target="_blank" rel="noopener noreferrer">
+                            Japanese game devs face font dilemma as license increases from $380 to $20k
+                        </a>
+                    </td>
+                    <td class="author">zdw</td>
+                    <td>
+                        <span class="badge score-badge">▲ 211</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 97</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>19</strong></td>
+                    <td class="news-title">
+                        <a href="https://techcrunch.com/2025/12/02/amazon-releases-an-impressive-new-ai-chip-and-teases-a-nvidia-friendly-roadmap/" target="_blank" rel="noopener noreferrer">
+                            Amazon launches Trainium3
+                        </a>
+                    </td>
+                    <td class="author">thnaks</td>
+                    <td>
+                        <span class="badge score-badge">▲ 168</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 65</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>20</strong></td>
+                    <td class="news-title">
+                        <a href="https://scienceclock.com/microbe-that-could-turn-martian-dust-into-oxygen/" target="_blank" rel="noopener noreferrer">
+                            Researchers Find Microbe Capable of Producing Oxygen from Martian Soil
+                        </a>
+                    </td>
+                    <td class="author">ashishgupta2209</td>
+                    <td>
+                        <span class="badge score-badge">▲ 9</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 2</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>21</strong></td>
+                    <td class="news-title">
+                        <a href="https://the-decoder.com/qwen3-vl-can-scan-two-hour-videos-and-pinpoint-nearly-every-detail/" target="_blank" rel="noopener noreferrer">
+                            Qwen3-VL can scan two-hour videos and pinpoint nearly every detail
+                        </a>
+                    </td>
+                    <td class="author">thm</td>
+                    <td>
+                        <span class="badge score-badge">▲ 181</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 58</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>22</strong></td>
+                    <td class="news-title">
+                        <a href="https://lwn.net/SubscriberLink/1046084/4c048ee008e1c70e/" target="_blank" rel="noopener noreferrer">
+                            Zig's new plan for asynchronous programs
+                        </a>
+                    </td>
+                    <td class="author">messe</td>
+                    <td>
+                        <span class="badge score-badge">▲ 281</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 206</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>23</strong></td>
+                    <td class="news-title">
+                        <a href="https://loadzx.com/en/" target="_blank" rel="noopener noreferrer">
+                            Load ZX Spectrum – first Museum dedicated to our first personal computer
+                        </a>
+                    </td>
+                    <td class="author">elvis70</td>
+                    <td>
+                        <span class="badge score-badge">▲ 45</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 10</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>24</strong></td>
+                    <td class="news-title">
+                        <a href="https://mainstreetautonomy.com/blog/2025-08-29-all-about-automotive-lidar/" target="_blank" rel="noopener noreferrer">
+                            All about automotive lidar
+                        </a>
+                    </td>
+                    <td class="author">dllu</td>
+                    <td>
+                        <span class="badge score-badge">▲ 150</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 63</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>25</strong></td>
+                    <td class="news-title">
+                        <a href="https://asawicki.info/news_1794_all_sources_of_directx_12_documentation" target="_blank" rel="noopener noreferrer">
+                            All Sources of DirectX 12 Documentation
+                        </a>
+                    </td>
+                    <td class="author">ibobev</td>
+                    <td>
+                        <span class="badge score-badge">▲ 19</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 8</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>26</strong></td>
+                    <td class="news-title">
+                        <a href="https://varlogsimon.leaflet.pub/3m6zrw6k2bs2p?interactionDrawer=quotes" target="_blank" rel="noopener noreferrer">
+                            Kohler Can Access Pictures from "End-to-End Encrypted" Toilet Camera
+                        </a>
+                    </td>
+                    <td class="author">TimDotC</td>
+                    <td>
+                        <span class="badge score-badge">▲ 168</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 143</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>27</strong></td>
+                    <td class="news-title">
+                        <a href="https://www.nber.org/digest/202512/school-cell-phone-bans-and-student-achievement" target="_blank" rel="noopener noreferrer">
+                            School cell phone bans and student achievement
+                        </a>
+                    </td>
+                    <td class="author">harias</td>
+                    <td>
+                        <span class="badge score-badge">▲ 148</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 146</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>28</strong></td>
+                    <td class="news-title">
+                        <a href="https://lite.localcafe.org/" target="_blank" rel="noopener noreferrer">
+                            Free static site generator for small restaurants and cafes
+                        </a>
+                    </td>
+                    <td class="author">fullstacking</td>
+                    <td>
+                        <span class="badge score-badge">▲ 137</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 77</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>29</strong></td>
+                    <td class="news-title">
+                        <a href="https://www.ycombinator.com/companies/delty/jobs/aPWMaiq-full-stack-software-engineer" target="_blank" rel="noopener noreferrer">
+                            Delty (YC X25) Is Hiring
+                        </a>
+                    </td>
+                    <td class="author">Unknown</td>
+                    <td>
+                        <span class="badge score-badge">▲ 0</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 0</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>30</strong></td>
+                    <td class="news-title">
+                        <a href="https://status.codeberg.org/status/codeberg" target="_blank" rel="noopener noreferrer">
+                            Codeberg Is Down
+                        </a>
+                    </td>
+                    <td class="author">x3ro</td>
+                    <td>
+                        <span class="badge score-badge">▲ 10</span>
+                    </td>
+                    <td>
+                        <span class="badge comments-badge">💬 3</span>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        
+        <div class="footer">
+            <a href="https://news.ycombinator.com/" class="source-link" target="_blank" rel="noopener noreferrer">
+                🔗 Visit Original Hacker News
+            </a>
+            <p style="margin-top: 15px;">
+                Generated by Hacker News Parser • Data is updated automatically
+            </p>
+        </div>
+    </div>
+</body>
+</html>
